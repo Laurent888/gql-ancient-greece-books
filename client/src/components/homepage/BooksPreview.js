@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { Paper, Typography, CircularProgress } from "@material-ui/core";
 import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
+import Grow from "@material-ui/core/Grow";
 
 import { Context } from "../../context/context";
 
@@ -23,26 +24,33 @@ const BooksPreview = () => {
           color="primary"
           style={{ marginRight: "1rem", fontSize: "40px" }}
         />
-        <Typography variant="h5">Popular books</Typography>
+        <Typography variant="h5">
+          Popular books{" "}
+          <span style={{ color: "#aaa", fontWeight: "300", fontSize: "16px" }}>
+            by {authorPreview}
+          </span>
+        </Typography>
       </div>
 
       <div style={{ display: "flex", marginTop: "20px" }}>
-        {data.books.map((item) => (
-          <div
-            key={item.id}
-            style={{ width: "130px", height: "250px", marginRight: "2rem" }}
-          >
-            <img
-              src={item.imageUrl}
-              alt={item.id}
-              style={{
-                width: "100%",
-                objectPosition: "top",
-                objectFit: "contain",
-              }}
-            />
-            <p>{item.title}</p>
-          </div>
+        {data.books.map((item, index) => (
+          <Grow in={true} timeout={index * 300}>
+            <div
+              key={item.id}
+              style={{ width: "130px", height: "250px", marginRight: "2rem" }}
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.id}
+                style={{
+                  width: "100%",
+                  objectPosition: "top",
+                  objectFit: "contain",
+                }}
+              />
+              <p>{item.title}</p>
+            </div>
+          </Grow>
         ))}
       </div>
     </Paper>

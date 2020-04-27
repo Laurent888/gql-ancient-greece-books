@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "start",
     fontWeight: "bold",
-    fontSize: "1.6rem",
+    fontSize: "1.5rem",
     marginRight: "10rem",
   },
   link: {
@@ -35,7 +35,19 @@ const Navbar = () => {
       <AppBar position="static" color="default">
         <Container maxWidth="xl">
           <Toolbar>
-            <Button className={classes.title} component={RouterLink} to="/">
+            <div style={{ width: "50px", height: "50px" }}>
+              <img
+                src="https://previews.123rf.com/images/kannaa123rf/kannaa123rf1705/kannaa123rf170500110/79262385-bank-courthouse-parthenon-architecture-icon.jpg"
+                alt="logo"
+                style={{ width: "50px", height: "50px", objectFit: "contain" }}
+              />
+            </div>
+            <Button
+              color="primary"
+              className={classes.title}
+              component={RouterLink}
+              to="/"
+            >
               Ancient Greece Bookstore
             </Button>
 
