@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { Paper, Typography, CircularProgress } from "@material-ui/core";
+import { Paper, Typography, CircularProgress, Grid } from "@material-ui/core";
 import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
 import Grow from "@material-ui/core/Grow";
 
@@ -34,9 +34,8 @@ const BooksPreview = () => {
 
       <div style={{ display: "flex", marginTop: "20px" }}>
         {data.books.map((item, index) => (
-          <Grow in={true} timeout={index * 300}>
+          <Grow key={item.id} in={true} timeout={index * 300}>
             <div
-              key={item.id}
               style={{ width: "130px", height: "250px", marginRight: "2rem" }}
             >
               <img

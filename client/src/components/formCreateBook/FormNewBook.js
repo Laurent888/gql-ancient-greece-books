@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
 import { CREATE_BOOK, GET_BOOKS } from "../../utils/graphql";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   formContainer: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const FormNewBook = () => {
   const classes = useStyles();
+  const [errors, setErrors] = useState("");
   const [bookInput, setBookInput] = useState({
     title: "",
     author: "",
@@ -36,6 +38,8 @@ const FormNewBook = () => {
 
   const [createBook] = useMutation(CREATE_BOOK, {
     update(cache, result) {
+      console.log(result);
+
       const data = cache.readQuery({
         query: GET_BOOKS,
       });
@@ -75,7 +79,10 @@ const FormNewBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createBook();
+    createBook().catch((err) => {
+      setErrors(err.graphQLErrors[0].message);
+      setTimeout(() => setErrors(""), 3000);
+    });
   };
 
   return (
@@ -121,6 +128,11 @@ const FormNewBook = () => {
       <Button variant="outlined" color="primary" type="submit">
         Submit new book
       </Button>
+      {errors !== "" && (
+        <Typography variant="body1" color="secondary">
+          *{errors}
+        </Typography>
+      )}
     </form>
   );
 };

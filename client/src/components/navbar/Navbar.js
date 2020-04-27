@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "start",
     fontWeight: "bold",
     fontSize: "1.5rem",
-    marginRight: "10rem",
+    marginRight: "auto",
   },
   link: {
     fontSize: "16px",
@@ -87,7 +87,7 @@ const Navbar = () => {
               <Typography
                 variant="body2"
                 color="primary"
-                style={{ marginLeft: "auto" }}
+                style={{ marginLeft: "2rem" }}
               >
                 Welcome {user.username}
               </Typography>
