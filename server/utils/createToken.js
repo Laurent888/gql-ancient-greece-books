@@ -17,3 +17,15 @@ exports.createToken = async (user) => {
 
   return token;
 };
+
+exports.decodeToken = async (token) => {
+  try {
+    const tokenData = token.split(" ")[1];
+    const user = await jwt.verify(tokenData, process.env.JWT_SECRET);
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

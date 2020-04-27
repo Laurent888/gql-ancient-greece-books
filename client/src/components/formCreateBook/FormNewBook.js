@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
-import { CREATE_BOOK } from "../../utils/graphql";
+import { CREATE_BOOK, GET_BOOKS } from "../../utils/graphql";
 
 const useStyles = makeStyles({
   formContainer: {
@@ -32,9 +32,30 @@ const FormNewBook = () => {
     imageUrl: "",
   });
 
+  const history = useHistory();
+
   const [createBook] = useMutation(CREATE_BOOK, {
     update(cache, result) {
-      console.log(result);
+      const data = cache.readQuery({
+        query: GET_BOOKS,
+      });
+
+      cache.writeQuery({
+        query: GET_BOOKS,
+        data: {
+          getBooks: [...data.getBooks, { ...result.data.createBook }],
+        },
+      });
+
+      setBookInput({
+        title: "",
+        author: "",
+        description: "",
+        publishedYear: "",
+        imageUrl: "",
+      });
+
+      history.push("/books");
     },
     variables: {
       title: bookInput.title,

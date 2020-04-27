@@ -2,10 +2,11 @@ const { UserInputError } = require("apollo-server");
 
 const Book = require("../models/bookModel");
 const { validateCreateBookInput } = require("../utils/validators");
+const { decodeToken } = require("../utils/createToken");
 
 const bookResolvers = {
   Query: {
-    getBooks: async () => {
+    getBooks: async (_, args, context) => {
       const books = await Book.find();
 
       return books;
@@ -20,9 +21,18 @@ const bookResolvers = {
         ...res._doc,
       };
     },
+    filterBooksByAuthor: async (_, { author }, context) => {
+      const books = await Book.find({ author });
+
+      return books;
+    },
   },
   Mutation: {
-    createBook: async (_, { input }, context) => {
+    createBook: async (_, { input }, { token }) => {
+      const user = await decodeToken(token);
+
+      if (!user) throw new Error("This action is not authorized");
+
       const { valid, errors } = validateCreateBookInput(input);
 
       if (valid === false)
@@ -52,8 +62,11 @@ const bookResolvers = {
         ...book._doc,
       };
     },
-    deleteBook: async (_, { id }, context) => {
+    deleteBook: async (_, { id }, { token }) => {
       try {
+        const user = await decodeToken(token);
+
+        if (!user) throw new Error("This action is not authorized");
         const book = await Book.findById(id);
 
         if (!book) throw new Error("This book can't be found.");

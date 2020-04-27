@@ -41,6 +41,7 @@ const typeDefs = gql`
     getUserById(id: ID!): User
     getBooks: [Book]!
     getBookById(id: ID!): Book
+    filterBooksByAuthor(author: String): [Book]
   }
 
   type Mutation {

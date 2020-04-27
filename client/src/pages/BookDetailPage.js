@@ -136,7 +136,7 @@ const BookDetailPage = (props) => {
                 color="secondary"
                 disableElevation
                 onClick={() => {
-                  deleteBook();
+                  deleteBook().catch((err) => console.log(err.message));
                 }}
               >
                 Confirm

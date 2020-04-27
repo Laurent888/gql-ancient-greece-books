@@ -7,6 +7,7 @@ const Context = createContext();
 
 const INITIAL_STATE = {
   user: null,
+  authorPreview: "Plato",
 };
 
 if (localStorage.getItem("token")) {
@@ -31,6 +32,11 @@ const stateReducer = (state = INITIAL_STATE, action) => {
         ...state,
         user: null,
       };
+    case types.SET_AUTHOR_PREVIEW:
+      return {
+        ...state,
+        authorPreview: action.payload,
+      };
     default:
       return state;
   }
@@ -50,8 +56,14 @@ const ContextProvider = (props) => {
     dispatch({ type: types.LOGOUT });
   };
 
+  const setAuthorPreview = (author) => {
+    dispatch({ type: types.SET_AUTHOR_PREVIEW, payload: author });
+  };
+
   return (
-    <Context.Provider value={{ ...state, loginContext, logoutContext }}>
+    <Context.Provider
+      value={{ ...state, loginContext, logoutContext, setAuthorPreview }}
+    >
       {props.children}
     </Context.Provider>
   );

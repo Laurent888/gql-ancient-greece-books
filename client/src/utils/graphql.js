@@ -48,7 +48,7 @@ export const CREATE_BOOK = gql`
       author
       description
       publishedYear
-      publishedYear
+      imageUrl
     }
   }
 `;
