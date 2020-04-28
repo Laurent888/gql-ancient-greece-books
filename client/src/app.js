@@ -10,6 +10,8 @@ import BookDetailPage from "./pages/BookDetailPage";
 import LoginPage from "./pages/LoginPage";
 import CreateBookPage from "./pages/CreateBookPage";
 
+import "./app.css";
+
 const App = () => {
   return (
     <div>

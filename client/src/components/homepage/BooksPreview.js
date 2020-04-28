@@ -18,8 +18,10 @@ const BooksPreview = () => {
   if (error) return <p>Error...</p>;
 
   return (
-    <Paper elevation={2} style={{ padding: "10px" }}>
-      <div style={{ display: "flex", alignItems: "center" }}>
+    <Paper elevation={2} style={{ padding: "20px", boxSizing: "border-box" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}
+      >
         <MenuBookOutlinedIcon
           color="primary"
           style={{ marginRight: "1rem", fontSize: "40px" }}
@@ -32,26 +34,46 @@ const BooksPreview = () => {
         </Typography>
       </div>
 
-      <div style={{ display: "flex", marginTop: "20px" }}>
-        {data.books.map((item, index) => (
-          <Grow key={item.id} in={true} timeout={index * 300}>
-            <div
-              style={{ width: "130px", height: "250px", marginRight: "2rem" }}
-            >
-              <img
-                src={item.imageUrl}
-                alt={item.id}
-                style={{
-                  width: "100%",
-                  objectPosition: "top",
-                  objectFit: "contain",
-                }}
-              />
-              <p>{item.title}</p>
-            </div>
-          </Grow>
-        ))}
-      </div>
+      <Grid container spacing={10}>
+        {data.books
+          .filter((item, index) => index < 5)
+          .map((item, index) => (
+            <Grow key={item.id} in={true} timeout={index * 300}>
+              <Grid item sm={6} md={2}>
+                <Paper
+                  style={{
+                    width: "140px",
+                    height: "270px",
+                  }}
+                >
+                  <div
+                    style={{ display: "block", width: "100%", height: "210px" }}
+                  >
+                    <img
+                      src={item.imageUrl}
+                      alt={item.id}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectPosition: "top",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                  <p
+                    style={{
+                      height: "auto",
+
+                      padding: "5px 10px",
+                    }}
+                  >
+                    {item.title}
+                  </p>
+                </Paper>
+              </Grid>
+            </Grow>
+          ))}
+      </Grid>
     </Paper>
   );
 };
